@@ -37,6 +37,7 @@ function chooseColor(mag){
     }
 }
 
+
 d3.json(queryUrl, function(data){
     createFeatures(data.features);
 });
@@ -50,7 +51,7 @@ function createFeatures(earthquakeData){
             return L.circleMarker(latlng, {
                 radius: radiusSize(feature.properties.mag),
                 color:"black",
-                weight:0.2,
+                weight:0.4,
                 fillOpacity:0.8,
                 fillColor: chooseColor(feature.properties.mag)
             })
@@ -63,15 +64,12 @@ function createFeatures(earthquakeData){
 var tectPlates= L.layerGroup();
 d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json", function(data){
     L.geoJSON(data,{
-        pointToLayer:function(feature, latlng){
-            return L.polygon(latlng,{
-                color:"black",
-                fillColor:"pink",
-                weight:3
-            })
+        color:"#FF69B4",
+        fillOpacity:0.1,
+        weight:2
         }
        
-    }).addTo(tectPlates)
+    ).addTo(tectPlates)
     
 })
 
@@ -105,8 +103,8 @@ var baseMaps={
 var overlayMaps={
     "Earthquakes":earthquakes,
     "Tectonic Plates": tectPlates
-    
 };
+
 var myMap = L.map("map", {
     center: [
       33.09, -75.71
@@ -144,7 +142,6 @@ var myMap = L.map("map", {
 
   };
 
-  // Adding legend to the map
   legend.addTo(myMap);
 
 };
